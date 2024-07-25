@@ -3,18 +3,11 @@ import { nanoid } from "nanoid";
 
 const contactsSlice = createSlice({
   name: "contacts",
-  initialState() {
-    const savedContacts = JSON.parse(localStorage.getItem("contacts"));
-    if (savedContacts) {
-      return { items: savedContacts };
-    }
-    return { items: [] };
-  },
+  initialState: { items: [] },
   reducers: {
     addContact: {
       reducer(state, action) {
         state.items.push(action.payload);
-        localStorage.setItem("contacts", JSON.stringify(state.items));
       },
       prepare(contact) {
         return {
@@ -30,7 +23,6 @@ const contactsSlice = createSlice({
         (contact) => contact.id === action.payload
       );
       state.items.splice(index, 1);
-      localStorage.setItem("contacts", JSON.stringify(state.items));
     },
   },
 });
